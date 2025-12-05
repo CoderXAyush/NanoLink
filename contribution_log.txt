@@ -1,2 +1,3 @@
 Added .gitignore
 Initial commit and project scaffold
+Added Security Groups for EC2
