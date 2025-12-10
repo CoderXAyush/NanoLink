@@ -3,3 +3,4 @@ Initial commit and project scaffold
 Added Security Groups for EC2
 WIP: Implementing URL storage logic
 Fixed Docker build caching issue
+Updated architecture diagram
