@@ -7,3 +7,4 @@ Updated architecture diagram
 Added database connection timeout
 Fixed typo in environment config
 Setup Kubernetes deployment manifests
+Added Service and Ingress configurations
