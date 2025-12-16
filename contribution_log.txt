@@ -10,3 +10,4 @@ Setup Kubernetes deployment manifests
 Added Service and Ingress configurations
 Updated Terraform provider versions
 Connected DB service to backend
+Added comments to main.go
