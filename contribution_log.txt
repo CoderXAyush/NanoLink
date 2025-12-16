@@ -5,3 +5,4 @@ WIP: Implementing URL storage logic
 Fixed Docker build caching issue
 Updated architecture diagram
 Added database connection timeout
+Fixed typo in environment config
