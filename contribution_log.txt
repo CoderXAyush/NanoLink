@@ -12,3 +12,4 @@ Updated Terraform provider versions
 Connected DB service to backend
 Added comments to main.go
 Finally fixed the Terraform state lock issue
+Quick fix for Route Table association
