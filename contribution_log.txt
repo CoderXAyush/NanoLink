@@ -15,3 +15,4 @@ Finally fixed the Terraform state lock issue
 Quick fix for Route Table association
 Tweaked load balancer settings
 Added input validation for URLs
+WIP: optimizing Docker image size
