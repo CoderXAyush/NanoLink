@@ -17,3 +17,4 @@ Tweaked load balancer settings
 Added input validation for URLs
 WIP: optimizing Docker image size
 Fixed race condition in counter logic
+Cleaned up unused variables and logs
