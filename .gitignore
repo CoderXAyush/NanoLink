@@ -1,0 +1,9 @@
+.DS_Store
+*.exe
+*.log
+terraform.tfstate
+terraform.tfstate.backup
+.terraform/
+contribution_log.txt
+generate.sh
+git_painter.sh
