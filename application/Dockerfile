@@ -1,33 +1,35 @@
-# ---------- Build stage ----------
+# Stage 1: Builder
 FROM golang:1.22-alpine AS builder
 
 WORKDIR /app
 
+# Install build dependencies
 RUN apk add --no-cache git
 
-# Copy go.mod first
-COPY go.mod ./
-
-# Download deps (safe even if none exist)
+# Copy Go module files first (better caching)
+COPY go.mod go.sum ./
 RUN go mod download
 
-# Copy rest of the source
+# Copy source code
 COPY . .
 
-# Build the binary
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
-    go build -o api-server ./cmd/api-server
+# Build API Server
+RUN CGO_ENABLED=0 GOOS=linux go build -o /bin/api-server ./cmd/api-server
 
-# ---------- Runtime stage ----------
-FROM gcr.io/distroless/base-debian12
+# Build Analytics Worker
+RUN CGO_ENABLED=0 GOOS=linux go build -o /bin/analytics-worker ./cmd/analytics-worker
+
+# Stage 2: Runner (Distroless/Alpine for security)
+FROM alpine:latest
 
 WORKDIR /app
 
-COPY --from=builder /app/api-server .
+# Copy binaries from builder
+COPY --from=builder /bin/api-server .
+COPY --from=builder /bin/analytics-worker .
 
+# Expose API port
 EXPOSE 8080
 
-USER nonroot:nonroot
-
+# Default command (can be overridden in docker-compose)
 CMD ["./api-server"]
-
