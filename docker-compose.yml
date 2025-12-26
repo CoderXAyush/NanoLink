@@ -1,9 +1,7 @@
 version: '3.8'
 
 services:
-  # ----------------------------
-  # App Services
-  # ----------------------------
+  # --- Go Application ---
   api-server:
     build:
       context: ./application
@@ -14,13 +12,12 @@ services:
     environment:
       - APP_PORT=8080
       - REDIS_ADDR=redis:6379
-      - KAFKA_BROKERS=kafka:9092
       - MONGO_URI=mongodb://mongo:27017
+      - KAFKA_BROKERS=kafka:9092
     depends_on:
       - redis
-      - kafka
       - mongo
-    command: ["./api-server"]
+      - kafka
 
   analytics-worker:
     build:
@@ -29,30 +26,24 @@ services:
     container_name: nanolink-worker
     environment:
       - KAFKA_BROKERS=kafka:9092
-      - MONGO_URI=mongodb://mongo:27017
+      - MONGO_URI=mongodb://mongo:27017  # <--- ADD THIS (Points to the 'mongo' container)
     depends_on:
       - kafka
-      - mongo
+      - mongo                            # <--- Good practice to wait for mongo too
     command: ["./analytics-worker"]
 
-  # ----------------------------
-  # Infrastructure
-  # ----------------------------
+  # --- Infrastructure ---
   redis:
     image: redis:7-alpine
     container_name: nanolink-redis
     ports:
       - "6379:6379"
-    volumes:
-      - redis_data:/data
 
   mongo:
     image: mongo:6
     container_name: nanolink-mongo
     ports:
       - "27017:27017"
-    volumes:
-      - mongo_data:/data/db
 
   zookeeper:
     image: confluentinc/cp-zookeeper:7.5.0
@@ -75,7 +66,3 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-
-volumes:
-  redis_data:
-  mongo_data:
