@@ -50,7 +50,9 @@ This repository follows a strict Monorepo pattern, separating application logic 
 └── k8s/                 # ☸️ Kubernetes Manifests
     ├── base/            # Common deployment logic
     └── overlays/        # Kustomize patches (Dev vs Prod)
+```
 
+---
     
 
 ## 🔄 Application Workflow
