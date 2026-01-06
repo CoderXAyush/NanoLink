@@ -7,3 +7,4 @@ terraform.tfstate.backup
 contribution_log.txt
 generate.sh
 git_painter.sh
+terraform.tfstate*
